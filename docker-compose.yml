@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+
+  redis-master:
+    image: redis:latest
+    container_name: redis-master
+    ports:
+        - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+
+  redis-slave1:
+    image: redis:latest
+    container_name: redis-slave1
+    ports:
+      - "6380:6379"
+    command:
+      [
+        "redis-server",
+        "--appendonly", "yes",
+        "--replicaof", "redis-master", "6379"
+      ]
+    depends_on:
+      - redis-master
+
+  redis-slave2:
+    image: redis:latest
+    container_name: redis-slave2
+    ports:
+      - "6381:6379"
+    command:
+      [
+        "redis-server",
+        "--appendonly", "yes",
+        "--replicaof", "redis-master", "6379"
+      ]
+    depends_on:
+      - redis-master 
