@@ -33,3 +33,16 @@ Follow these steps to get the project up and running:
 ```bash
 git clone https://github.com/yourusername/redis-master-slave-example.git
 cd redis-master-slave-example
+```
+
+## Build and Run with Docker Compose
+
+Ensure Docker is running on your system.
+
+Build and start the services using Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+
